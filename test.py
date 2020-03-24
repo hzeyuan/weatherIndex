@@ -3,7 +3,7 @@ from weatherIndex.config import *
 import difflib
 
 if __name__ == '__main__':
-    w = WeatherIndex(temp=20, windpower=3, range_temperature=6,humidity=91, weather="晴")
+    w = WeatherIndex(temp=20, windpower=3, range_temperature=6,humidity=94, weather="多云")
     print(w.get_lifestyle())
     #weather_list = []
     # for w in weather_section:
