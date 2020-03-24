@@ -11,7 +11,7 @@ def get_txt(txt, params):
             output = txt[t]
             break
     else:
-        output = "123"
+        output = txt[0]
     return output
 
 
