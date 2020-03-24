@@ -38,9 +38,9 @@ class WeatherIndex:
         else:
             self.weather = "晴"
         # 对天气进行处理，匹配一个近似值
-        self.windpower = float(kwargs.get("windpower", None))
-        self.humidity = float(kwargs.get("humidity", None))
-        self.range_temperature = float(kwargs.get("range_temperature", None))
+        self.windpower = int(kwargs.get("windpower", 3))
+        self.humidity = int(kwargs.get("humidity", 50))
+        self.range_temperature = int(kwargs.get("range_temperature", 5))
 
     def get_lifestyle(self):
         lifestyle = [self.get_comf(self.temp, self.weather),
