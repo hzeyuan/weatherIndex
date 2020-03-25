@@ -26,7 +26,7 @@ class WeatherIndex:
         humidity:湿度
         range_temperature:温差
         """
-        self.temp = kwargs.get("temp", None)
+        self.temp = int(kwargs.get("temp", 20))
         self.weather = kwargs.get('weather', None)
         if self.weather:
             weather_list = []
@@ -99,7 +99,7 @@ class WeatherIndex:
 
     def get_uv(self, temp: Union[int, float], weather: str):
         uv = ["很强", "强", "中等", "弱", "最弱"]
-        uv_section = (([26, 99]), ([17, 26]), ([10, 17]), ([5, 10]), ([0, 5]))
+        uv_section = (([30, 99]), ([25, 30]), ([17, 25]), ([10, 17]), ([10, 17], (-10, 10)))
         weather_index = self._get_weather_index(weather)
         temp_index = self.check_range(temp, *uv_section)
         ret_level = (weather_index + temp_index) // 2
