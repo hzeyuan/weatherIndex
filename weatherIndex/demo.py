@@ -62,18 +62,19 @@ class WeatherIndex:
                         get_txt(temperature_txt, temp),
                         get_txt(windpower_txt, self.windpower),
                         get_txt(comf_txt, ret_level)])
-        return {"type": "comf", "brf": comf[ret_level], "txt": txt}
+        return {"type": "comf", "brf": comf[ret_level], "txt": txt, "icon": "", "gotourl": '', 'title': "舒适度指数"}
 
     def get_drsg(self, temp: Union[int, float]):
         drsg = ["炎热", "热", "舒适", "较舒适", "冷", "较冷", "寒冷"]
         temp_index = self.check_range(temp, *drsg_section)
-        return {"type": "drsg", "brf": drsg[temp_index], "txt": get_txt(drsg_txt, temp_index)}
+        return {"type": "drsg", "brf": drsg[temp_index], "txt": get_txt(drsg_txt, temp_index), "icon": "",
+                "gotourl": '', 'title': "穿衣指数"}
 
     def get_flu(self, range_temperature: Union[int, float]):
         flu = ["少发", "较易发", "易发", "极易发"]
         flu_index = self.check_range(range_temperature, *flu_section)  # 感冒指数
         txt = get_txt(range_temperature_txt, range_temperature)  # 根据温差获取文本
-        return {"type": "flu", "brf": flu[flu_index], "txt": txt}
+        return {"type": "flu", "brf": flu[flu_index], "txt": txt, "icon": "", "gotourl": '', 'title': "感冒指数"}
 
     def get_sport(self, windpower: Union[int, float], weather: str):
         sport = ["适宜", "较适宜", "较不宜", "不宜"]
@@ -84,7 +85,7 @@ class WeatherIndex:
                         get_txt(windpower_txt, windpower),
                         get_txt(sport_txt, ret_level),
                         ])
-        return {"type": "sport", "brf": sport[ret_level], "txt": txt}
+        return {"type": "sport", "brf": sport[ret_level], "txt": txt, "icon": "", "gotourl": '', 'title': "运动指数"}
 
     def get_trav(self, windpower: Union[int, float], weather: str):
         travel = ["适宜", "较适宜", "一般", "较不宜"]
@@ -95,7 +96,7 @@ class WeatherIndex:
                         get_txt(windpower_txt, windpower),
                         get_txt(trav_txt, ret_level),
                         ])
-        return {"type": "trav", "brf": travel[ret_level], "txt": txt}
+        return {"type": "trav", "brf": travel[ret_level], "txt": txt, "icon": "", "gotourl": '', 'title': "旅游指数"}
 
     def get_uv(self, temp: Union[int, float], weather: str):
         uv = ["很强", "强", "中等", "弱", "最弱"]
@@ -103,18 +104,20 @@ class WeatherIndex:
         weather_index = self._get_weather_index(weather)
         temp_index = self.check_range(temp, *uv_section)
         ret_level = (weather_index + temp_index) // 2
-        return {"type": "uv", "brf": uv[ret_level], "txt": get_txt(uv_txt, ret_level)}
+        return {"type": "uv", "brf": uv[ret_level], "txt": get_txt(uv_txt, ret_level), "icon": "", "gotourl": '',
+                'title': "紫外线指数"}
 
     def get_air(self, weather: str):
         air = ["优", "良", "中", "较差"]
         weather_index = self._get_weather_index(weather)
-        return {"type": "air", "brf": air[weather_index], "txt": get_txt(air_txt, weather_index)}
+        return {"type": "air", "brf": air[weather_index], "txt": get_txt(air_txt, weather_index), "icon": "",
+                "gotourl": '', 'title': "空气污染指数"}
 
     def get_cw(self, windpower: Union[int, float], weather: str):
         cw = ["适宜", "较适宜", "一般", "较不宜"]
         weather_index = self._get_weather_index(weather)
         txt = '，'.join([weather_txt[self.weather], get_txt(windpower_txt, windpower), get_txt(cw_txt, weather_index)])
-        return {"type": "cw", "brf": cw[weather_index], "txt": txt}
+        return {"type": "cw", "brf": cw[weather_index], "txt": txt, "icon": "", "gotourl": '', 'title': "洗车指数"}
 
     @staticmethod
     def _get_weather_index(weather: str):
