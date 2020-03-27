@@ -6,12 +6,16 @@ from typing import Union, List, Tuple
 
 def get_txt(txt, params):
     output = ""
-    for t in txt.keys():
-        if params in range(*t):
-            output = txt[t]
-            break
-    else:
-        output = txt[txt.keys()[0]]
+    try:
+        for t in txt.keys():
+            if params in range(*t):
+                output = txt[t]
+                break
+        else:
+            key_list = list(txt.keys())
+            output = txt[key_list[0]]
+    except Exception as e:
+        pass
     return output
 
 
