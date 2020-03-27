@@ -32,14 +32,17 @@ class WeatherIndex:
         """
         self.temp = int(kwargs.get("temp", 20))
         self.weather = kwargs.get('weather', None)
-        if self.weather:
-            weather_list = []
-            for w in weather_section:
-                weather_list += w
-            fuzzy_weather = difflib.get_close_matches(self.weather, weather_list, 1, cutoff=0.2)
-            if fuzzy_weather:
-                self.weather = fuzzy_weather[0]
-        else:
+        try:
+            if self.weather:
+                weather_list = []
+                for w in weather_section:
+                    weather_list += w
+                fuzzy_weather = difflib.get_close_matches(self.weather, weather_list, 1, cutoff=0.2)
+                if fuzzy_weather:
+                    self.weather = fuzzy_weather[0]
+            else:
+                self.weather = "晴"
+        except:
             self.weather = "晴"
         # 对天气进行处理，匹配一个近似值
         self.windpower = int(kwargs.get("windpower", 3))
@@ -61,8 +64,8 @@ class WeatherIndex:
         comf = ["舒适", "较舒适", "较不舒适", "很不舒适"]
         comf_index = self.check_range(temp, *comf_section)
         weather_index = self._get_weather_index(weather)
-        ret_level = (weather_index + comf_index) // 2
-        txt = '，'.join([weather_txt[self.weather],
+        ret_level = (weather_index + comf_index) // 2 if (weather_index + comf_index) < 4 else 0
+        txt = '，'.join([weather_txt.get(self.weather, weather_txt["晴"]),
                         get_txt(temperature_txt, temp),
                         get_txt(windpower_txt, self.windpower),
                         get_txt(comf_txt, ret_level)])
@@ -143,12 +146,15 @@ class WeatherIndex:
         :param kwargs:
         :return:
         """
-        for index, section in enumerate(args):
-            try:
-                range_list = [range(*section)]
-            except TypeError:
-                range_list = [range(*s) for s in section]
-            for range_obj in range_list:
-                if params in range_obj:
-                    return index
+        try:
+            for index, section in enumerate(args):
+                try:
+                    range_list = [range(*section)]
+                except TypeError:
+                    range_list = [range(*s) for s in section]
+                for range_obj in range_list:
+                    if params in range_obj:
+                        return index
+        except:
+            pass
         return 0
