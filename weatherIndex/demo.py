@@ -50,14 +50,32 @@ class WeatherIndex:
         self.range_temperature = int(kwargs.get("range_temperature", 5))
 
     def get_lifestyle(self):
-        lifestyle = [self.get_comf(self.temp, self.weather),
-                     self.get_drsg(self.temp),
-                     self.get_flu(self.range_temperature),
-                     self.get_sport(self.windpower, self.weather),
-                     self.get_trav(self.windpower, self.weather),
-                     self.get_uv(self.temp, self.weather),
-                     self.get_air(self.weather),
-                     self.get_cw(self.windpower, self.weather)]
+        try:
+            lifestyle = [self.get_comf(self.temp, self.weather),
+                         self.get_drsg(self.temp),
+                         self.get_flu(self.range_temperature),
+                         self.get_sport(self.windpower, self.weather),
+                         self.get_trav(self.windpower, self.weather),
+                         self.get_uv(self.temp, self.weather),
+                         self.get_air(self.weather),
+                         self.get_cw(self.windpower, self.weather)]
+        except Exception as e:
+            lifestyle = [{'type': 'comf', 'brf': '舒适', 'txt': '今天天气晴好，偏热，有轻微的软风，十分舒适', 'icon': '', 'gotourl': '',
+                          'title': '舒适度指数'},
+                         {'type': 'drsg', 'brf': '舒适', 'txt': '建议着长袖T恤、衬衫加单裤等服装。年老体弱者宜着针织长袖衬衫、马甲和长裤。', 'icon': '',
+                          'gotourl': '', 'title': '穿衣指数'},
+                         {'type': 'flu', 'brf': '少发', 'txt': '昼夜温差很小，无明显降温过程，发生感冒机率很低。', 'icon': '', 'gotourl': '',
+                          'title': '感冒指数'},
+                         {'type': 'sport', 'brf': '适宜', 'txt': '今天天气晴好，有轻微的软风，适合外出运动', 'icon': '', 'gotourl': '',
+                          'title': '运动指数'},
+                         {'type': 'trav', 'brf': '适宜', 'txt': '今天天气晴好，有轻微的软风，适合外出旅行', 'icon': '', 'gotourl': '',
+                          'title': '旅游指数'},
+                         {'type': 'uv', 'brf': '很强', 'txt': '紫外线辐射强，建议涂擦SPF20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。',
+                          'icon': '', 'gotourl': '', 'title': '紫外线指数'},
+                         {'type': 'air', 'brf': '优', 'txt': '气象条件非常有利于空气污染物稀释、扩散和清除，可在室外正常活动。', 'icon': '',
+                          'gotourl': '', 'title': '空气污染指数'},
+                         {'type': 'cw', 'brf': '适宜', 'txt': '今天天气晴好，有轻微的软风，适合洗车', 'icon': '', 'gotourl': '',
+                          'title': '洗车指数'}]
         return lifestyle
 
     def get_comf(self, temp, weather):
